@@ -1,5 +1,9 @@
 ANON_DECREASE = 0.15
 
+def calc_gbp(current_land, total_land_lost, num_days_ago, is_war):
+    original_land = current_land + total_land_lost
+    
+
 def calc_pnf(target_nw, self_nw):
     relative_pnf = float(target_nw) / self_nw
     print "Relative PNF: %s" % relative_pnf
@@ -28,11 +32,11 @@ def calc_knf(target_nw, self_nw):
         return 1
 
 def calc_gains(resource_amount, attack_type_base, pnf, knf, gbp, gs, race, stance, relations, target_stance, attack_time_modifer, schools, anonymity):
-    gain = ((resource_amount * attack_type_base) * (pnf * knf * gbp * race * stance * relations * target_stance * attack_time_modifer)) / gs / schools
+    gain = resource_amount * attack_type_base * pnf * knf * gbp * race * stance * relations * target_stance * attack_time_modifer * gs * schools
     # gain -= gain * gs
     # gain -= gain * schools
     if anonymity:
-        gain = gain / (1 + ANON_DECREASE)
+        gain = gain * (1 - ANON_DECREASE)
     
     return gain
     
@@ -74,7 +78,7 @@ def test_gains2():
     target_nw = 456677
     target_kd_nw = 6418133
     self_kd_nw = 6449160
-    gbp = 1
+    gbp = 0.7639
     gs = 1
     race = 1
     stance = 1

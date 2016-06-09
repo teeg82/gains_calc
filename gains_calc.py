@@ -66,3 +66,26 @@ def test_gains():
 # We lost 99 soldiers, 39 Skeletons and 46 Ghouls in this battle.
 # We killed about 467 enemy troops.
 # Our forces will be available again in 14.48 days (on July 15 of YR6).
+
+def test_gains2():
+    resources = 817107
+    attack_type_base = 0.09375
+    self_nw = 470519
+    target_nw = 456677
+    target_kd_nw = 6418133
+    self_kd_nw = 6449160
+    gbp = 1
+    gs = 1
+    race = 1
+    stance = 1
+    relations = 1
+    target_stance = 1
+    attack_time_modifier = 1.125
+    schools = 1
+    anon = False
+    gains = calc_gains(resources, attack_type_base, calc_pnf(target_nw, self_nw), calc_knf(target_kd_nw, self_kd_nw), gbp, gs, race, stance, relations, target_stance, attack_time_modifier, schools, anon)
+    print gains
+# Your forces arrive at Victor of M-N-Y (2:15). A tough battle took place, but we have managed a victory! Your army stole 65,832 books of knowledge!
+# We lost 83 Skeletons and 193 Ghouls in this battle.
+# We killed about 1,705 enemy troops.
+# Our forces will be available again in 18.00 days (on March 2 of YR7).

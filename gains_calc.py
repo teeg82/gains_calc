@@ -26,17 +26,41 @@ def calc_knf(target_nw, self_nw):
     if relative_knf < 0.4:
         return 0.6666
     elif relative_knf >= 0.4 and relative_knf < 0.9:
-        print "KNF mod: %s" % (relative_knf * (2/3) + 4)
-        return relative_knf * (2/3) + 4
+        print "KNF mod: %s" % (relative_knf * (2/3) + 0.4)
+        return relative_knf * (float(2)/3) + 0.4
     else:
         return 1
 
-def calc_gains(resource_amount, attack_type_base, pnf, knf, gbp, gs, race, stance, relations, target_stance, attack_time_modifer, schools, anonymity):
-    gain = resource_amount * attack_type_base * pnf * knf * gbp * race * stance * relations * target_stance * attack_time_modifer * gs * schools
+def calc_gains(resource_amount, attack_type_base, pnf, knf, gbp, gs, race, stance, relations, target_stance, attack_time_modifier, schools, anonymity):
+    print "Resource amount: %s" % resource_amount
+    gain = resource_amount * attack_type_base
+    print "  attack type base (%s): %s" % (attack_type_base, gain)
+    gain = gain * pnf
+    print "  pnf (%s): %s" % (pnf, gain)
+    gain = gain*knf
+    print "  knf (%s): %s" % (knf, gain)
+    gain = gain * gbp
+    print "  gbp (%s): %s" % (gbp, gain)
+    gain = gain * race
+    print "  race (%s): %s" % (race, gain)
+    gain = gain * stance
+    print "  stance (%s): %s" % (stance, gain)
+    gain = gain * relations
+    print "  relations (%s): %s" % (relations, gain)
+    gain = gain * target_stance
+    print "  target_stance (%s): %s" % (target_stance, gain)
+    gain = gain * attack_time_modifier
+    print "  attack time modifier (%s): %s" % (attack_time_modifier, gain)
+    gain = gain * gs
+    print "  gs (%s): %s" % (gs, gain)
+    gain = gain * schools
+    print "  schools (%s): %s" % (schools, gain)
+    gain = resource_amount * attack_type_base * pnf * knf * gbp * race * stance * relations * target_stance * attack_time_modifier * gs * schools
     # gain -= gain * gs
     # gain -= gain * schools
     if anonymity:
         gain = gain * (1 - ANON_DECREASE)
+        print " anon (%s): %s" % (ANON_DECREASE, gain)
     
     return gain
     
@@ -93,3 +117,22 @@ def test_gains2():
 # We lost 83 Skeletons and 193 Ghouls in this battle.
 # We killed about 1,705 enemy troops.
 # Our forces will be available again in 18.00 days (on March 2 of YR7).
+
+def test_gains3():
+    resources = 1391879
+    attack_type_base = 0.09375
+    self_nw = 460513
+    target_nw = 487481
+    target_kd_nw = 5766863 
+    self_kd_nw = 6521388
+    gbp = 1
+    gs = 1
+    race = 1
+    stance = 0.5
+    relations = 1
+    target_stance = 1
+    attack_time_modifier = 1
+    schools = 1
+    anon = False
+    gains = calc_gains(resources, attack_type_base, calc_pnf(target_nw, self_nw), calc_knf(target_kd_nw, self_kd_nw), gbp, gs, race, stance, relations, target_stance, attack_time_modifier, schools, anon)
+    print " Total gains: %s" % gains
